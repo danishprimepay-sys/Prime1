@@ -1,0 +1,77 @@
+[
+ {
+  "pattern": "+1800555*",
+  "number": "+18005551234",
+  "matches": true
+ },
+ {
+  "pattern": "+1800555*",
+  "number": "+18005561234",
+  "matches": false
+ },
+ {
+  "pattern": "+1212555????",
+  "number": "+12125550123",
+  "matches": true
+ },
+ {
+  "pattern": "+1212555????",
+  "number": "+121255501234",
+  "matches": false
+ },
+ {
+  "pattern": "*",
+  "number": "+12025550123",
+  "matches": true
+ },
+ {
+  "pattern": "+1*0123",
+  "number": "+12025550123",
+  "matches": true
+ },
+ {
+  "pattern": "(202) 555-0123",
+  "number": "+12025550123",
+  "matches": true
+ },
+ {
+  "pattern": "202-555-0123",
+  "number": "+12025550124",
+  "matches": false
+ },
+ {
+  "pattern": "72345",
+  "number": "72345",
+  "matches": true
+ },
+ {
+  "pattern": "AMAZON",
+  "number": "AMAZON",
+  "matches": true
+ },
+ {
+  "pattern": "+1 (800) 555-*",
+  "number": "+18005550000",
+  "matches": true
+ },
+ {
+  "pattern": "*99",
+  "number": "+12025550199",
+  "matches": true
+ },
+ {
+  "pattern": "bank*",
+  "number": "BANKALERT",
+  "matches": true
+ },
+ {
+  "pattern": "bank*",
+  "number": "+12025550123",
+  "matches": false
+ },
+ {
+  "pattern": "",
+  "number": "+12025550123",
+  "matches": false
+ }
+]

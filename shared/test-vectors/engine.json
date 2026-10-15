@@ -1,0 +1,687 @@
+[
+ {
+  "name": "contact always allowed",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123",
+   "isContact": true,
+   "verification": "failed"
+  },
+  "context": {
+   "blocklist": [
+    "*"
+   ]
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "contact"
+   ],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "allowlist beats blocklist",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123"
+  },
+  "context": {
+   "allowlist": [
+    "202-555-0123"
+   ],
+   "blocklist": [
+    "*"
+   ]
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "allowlist"
+   ],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "exact blocklist",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123"
+  },
+  "context": {
+   "blocklist": [
+    "(202) 555-0123"
+   ]
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "blocklist"
+   ],
+   "score": 1.0
+  }
+ },
+ {
+  "name": "wildcard blocklist",
+  "event": {
+   "channel": "call",
+   "number": "+1 800 555 4444"
+  },
+  "context": {
+   "blocklist": [
+    "+1800555*"
+   ]
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "blocklist"
+   ],
+   "score": 1.0
+  }
+ },
+ {
+  "name": "clean call",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123"
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "hidden caller warns",
+  "event": {
+   "channel": "call",
+   "number": null
+  },
+  "context": {},
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "hidden_number"
+   ],
+   "score": 0.6
+  }
+ },
+ {
+  "name": "hidden caller blocked by setting",
+  "event": {
+   "channel": "call",
+   "number": ""
+  },
+  "context": {
+   "settings": {
+    "blockHiddenNumbers": true
+   }
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "hidden_number"
+   ],
+   "score": 1.0
+  }
+ },
+ {
+  "name": "stir/shaken failed warns",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123",
+   "verification": "failed"
+  },
+  "context": {},
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "verification_failed"
+   ],
+   "score": 0.7
+  }
+ },
+ {
+  "name": "stir/shaken passed is neutral",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123",
+   "verification": "passed"
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "invalid caller number",
+  "event": {
+   "channel": "call",
+   "number": "12345"
+  },
+  "context": {},
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "invalid_number"
+   ],
+   "score": 0.6
+  }
+ },
+ {
+  "name": "alphanumeric caller invalid",
+  "event": {
+   "channel": "call",
+   "number": "SPAM LIKELY"
+  },
+  "context": {},
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "invalid_number"
+   ],
+   "score": 0.6
+  }
+ },
+ {
+  "name": "bad NANP area code",
+  "event": {
+   "channel": "call",
+   "number": "+1 102 555 0123"
+  },
+  "context": {},
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "invalid_number"
+   ],
+   "score": 0.6
+  }
+ },
+ {
+  "name": "neighbor spoof alone",
+  "event": {
+   "channel": "call",
+   "number": "202-555-1111"
+  },
+  "context": {
+   "settings": {
+    "userNumber": "(202) 555-9876"
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "neighbor_spoof"
+   ],
+   "score": 0.52
+  }
+ },
+ {
+  "name": "neighbor spoof plus failed verification",
+  "event": {
+   "channel": "call",
+   "number": "202-555-1111",
+   "verification": "failed"
+  },
+  "context": {
+   "settings": {
+    "userNumber": "(202) 555-9876"
+   }
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "verification_failed",
+    "neighbor_spoof"
+   ],
+   "score": 0.856
+  }
+ },
+ {
+  "name": "neighbor detection disabled",
+  "event": {
+   "channel": "call",
+   "number": "202-555-1111",
+   "verification": "failed"
+  },
+  "context": {
+   "settings": {
+    "userNumber": "(202) 555-9876",
+    "detectNeighborSpoofing": false
+   }
+  },
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "verification_failed"
+   ],
+   "score": 0.7
+  }
+ },
+ {
+  "name": "own number is not a neighbor",
+  "event": {
+   "channel": "call",
+   "number": "(202) 555-9876"
+  },
+  "context": {
+   "settings": {
+    "userNumber": "(202) 555-9876"
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "community strong",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123"
+  },
+  "context": {
+   "community": {
+    "+12025550123": 0.92
+   }
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "community"
+   ],
+   "score": 0.92
+  }
+ },
+ {
+  "name": "community medium",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123"
+  },
+  "context": {
+   "community": {
+    "+12025550123": 0.6
+   }
+  },
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "community"
+   ],
+   "score": 0.6
+  }
+ },
+ {
+  "name": "community disabled",
+  "event": {
+   "channel": "call",
+   "number": "+12025550123"
+  },
+  "context": {
+   "community": {
+    "+12025550123": 0.92
+   },
+   "settings": {
+    "useCommunity": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "community uses normalized key",
+  "event": {
+   "channel": "call",
+   "number": "1 (202) 555-0123"
+  },
+  "context": {
+   "community": {
+    "+12025550123": 0.92
+   }
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "community"
+   ],
+   "score": 0.92
+  }
+ },
+ {
+  "name": "international caller valid",
+  "event": {
+   "channel": "call",
+   "number": "+44 20 7946 0958"
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "sms plain ham",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Can you pick up milk on the way home?"
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "sms otp ham",
+  "event": {
+   "channel": "sms",
+   "number": "72345",
+   "body": "Your verification code is 482913. Do not share it."
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "sms package scam rules only",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "USPS: your package is on hold. Update address: usps-help.top/x"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "keyword:package_delivery",
+    "url_suspicious_tld"
+   ],
+   "score": 0.5775
+  }
+ },
+ {
+  "name": "sms package scam full",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "USPS: your package is on hold. Update address: usps-help.top/x"
+  },
+  "context": {},
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "keyword:package_delivery",
+    "url_suspicious_tld",
+    "classifier"
+   ],
+   "score": 0.935768282229
+  }
+ },
+ {
+  "name": "sms toll scam",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "E-ZPass: unpaid toll balance of $6.99. Pay now at ezpass-pay.icu"
+  },
+  "context": {},
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "keyword:toll_unpaid",
+    "url_suspicious_tld",
+    "classifier"
+   ],
+   "score": 0.963836128316
+  }
+ },
+ {
+  "name": "sms ip url",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Your account is locked, verify now http://10.2.3.4/login"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "keyword:account_alert",
+    "url_ip_host"
+   ],
+   "score": 0.675
+  }
+ },
+ {
+  "name": "sms shortener only",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "photos from saturday: bit.ly/3abc"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "url_shortener"
+   ],
+   "score": 0.3
+  }
+ },
+ {
+  "name": "sms prize",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Congratulations! You won a $500 gift card. Claim at rb.gy/gift"
+  },
+  "context": {},
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "keyword:prize",
+    "url_shortener",
+    "classifier"
+   ],
+   "score": 0.957844935654
+  }
+ },
+ {
+  "name": "sms email sender",
+  "event": {
+   "channel": "sms",
+   "number": "promo@deals.example",
+   "body": "hi"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "sender_email"
+   ],
+   "score": 0.3
+  }
+ },
+ {
+  "name": "sms email sender with link",
+  "event": {
+   "channel": "sms",
+   "number": "promo@deals.example",
+   "body": "Your parcel is on hold. redeliver at parcel.top"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "WARN",
+   "reasons": [
+    "sender_email",
+    "keyword:package_delivery",
+    "url_suspicious_tld"
+   ],
+   "score": 0.70425
+  }
+ },
+ {
+  "name": "sms wrong number opener rules only",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Hey is this Jessica?"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "keyword:wrong_number_opener"
+   ],
+   "score": 0.25
+  }
+ },
+ {
+  "name": "sms contact bypasses content",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "You WON a prize! claim at bit.ly/x",
+   "isContact": true
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "contact"
+   ],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "sms short code blocklisted",
+  "event": {
+   "channel": "sms",
+   "number": "72345",
+   "body": "Deals!"
+  },
+  "context": {
+   "blocklist": [
+    "72345"
+   ]
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "blocklist"
+   ],
+   "score": 1.0
+  }
+ },
+ {
+  "name": "sms community",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "hello"
+  },
+  "context": {
+   "community": {
+    "+12025550123": 0.9
+   },
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "community"
+   ],
+   "score": 0.9
+  }
+ },
+ {
+  "name": "sms no body",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": null
+  },
+  "context": {},
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "sms government",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "IRS: you are eligible for a tax refund of $1,284. Submit your claim today"
+  },
+  "context": {},
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "keyword:government_impersonation",
+    "classifier"
+   ],
+   "score": 0.937042247279
+  }
+ },
+ {
+  "name": "sms crypto",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Earn guaranteed profit daily with our crypto investment group"
+  },
+  "context": {},
+  "expect": {
+   "action": "BLOCK",
+   "reasons": [
+    "keyword:crypto_investment",
+    "classifier"
+   ],
+   "score": 0.861119988036
+  }
+ }
+]

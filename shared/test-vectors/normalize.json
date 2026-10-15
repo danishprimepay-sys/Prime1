@@ -1,0 +1,107 @@
+[
+ {
+  "raw": null,
+  "countryCode": "1",
+  "expected": null
+ },
+ {
+  "raw": "",
+  "countryCode": "1",
+  "expected": null
+ },
+ {
+  "raw": "   ",
+  "countryCode": "1",
+  "expected": null
+ },
+ {
+  "raw": "(202) 555-0123",
+  "countryCode": "1",
+  "expected": "+12025550123"
+ },
+ {
+  "raw": "202.555.0123",
+  "countryCode": "1",
+  "expected": "+12025550123"
+ },
+ {
+  "raw": "1-202-555-0123",
+  "countryCode": "1",
+  "expected": "+12025550123"
+ },
+ {
+  "raw": "+1 202 555 0123",
+  "countryCode": "1",
+  "expected": "+12025550123"
+ },
+ {
+  "raw": "+44 20 7946 0958",
+  "countryCode": "1",
+  "expected": "+442079460958"
+ },
+ {
+  "raw": "011 44 20 7946 0958",
+  "countryCode": "1",
+  "expected": "+442079460958"
+ },
+ {
+  "raw": "0044 20 7946 0958",
+  "countryCode": "1",
+  "expected": "+442079460958"
+ },
+ {
+  "raw": "72345",
+  "countryCode": "1",
+  "expected": "72345"
+ },
+ {
+  "raw": "555-0123",
+  "countryCode": "1",
+  "expected": "5550123"
+ },
+ {
+  "raw": "Amazon ",
+  "countryCode": "1",
+  "expected": "AMAZON"
+ },
+ {
+  "raw": "john@example.com",
+  "countryCode": "1",
+  "expected": "JOHN@EXAMPLE.COM"
+ },
+ {
+  "raw": "Bank Alert",
+  "countryCode": "1",
+  "expected": "BANKALERT"
+ },
+ {
+  "raw": "020 7946 0958",
+  "countryCode": "44",
+  "expected": "+442079460958"
+ },
+ {
+  "raw": "07700 900123",
+  "countryCode": "44",
+  "expected": "+447700900123"
+ },
+ {
+  "raw": "+",
+  "countryCode": "1",
+  "expected": null
+ },
+ {
+  "raw": "--",
+  "countryCode": "1",
+  "expected": null
+ },
+ {
+  "raw": "12025550123",
+  "countryCode": "1",
+  "expected": "+12025550123"
+ },
+ {
+  "raw": "2025550123",
+  "countryCode": "44",
+  "expected": "2025550123"
+ }
+]

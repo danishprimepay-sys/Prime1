@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "thresholds": {
+    "block": 0.85,
+    "warn": 0.55
+  },
+  "community": {
+    "weight": 1.0
+  },
+  "call": {
+    "hiddenWeight": 0.6,
+    "verificationFailedWeight": 0.7,
+    "invalidNumberWeight": 0.6,
+    "neighborSpoofWeight": 0.52
+  },
+  "sms": {
+    "senderEmailWeight": 0.3,
+    "classifier": {
+      "minProbability": 0.5,
+      "weight": 0.9
+    },
+    "keywordRules": [
+      {
+        "id": "package_delivery",
+        "pattern": "(usps|ups|fedex|dhl|package|parcel|shipment).{0,60}(on hold|failed|unable to deliver|redeliver|incomplete address|update (your )?address)",
+        "weight": 0.35
+      },
+      {
+        "id": "toll_unpaid",
+        "pattern": "(toll|e-?zpass|fastrak|sunpass|txtag).{0,60}(unpaid|outstanding|balance due|overdue|penalt)",
+        "weight": 0.45
+      },
+      {
+        "id": "account_alert",
+        "pattern": "(account|card|apple ?id|paypal|bank|wallet).{0,60}(suspend|locked|disabled|restricted|unusual activity|verify|compromised)",
+        "weight": 0.35
+      },
+      {
+        "id": "prize",
+        "pattern": "(won|winner|congratulations|claim|selected).{0,60}(prize|reward|gift ?card|cash|\\$[0-9])",
+        "weight": 0.4
+      },
+      {
+        "id": "urgency",
+        "pattern": "(act now|urgent|immediately|final notice|within 24 ?(h|hours)|last chance)",
+        "weight": 0.2
+      },
+      {
+        "id": "crypto_investment",
+        "pattern": "(crypto|bitcoin|usdt|forex|investment).{0,60}(profit|returns?|earn|guaranteed)|(guaranteed|daily) (profit|returns?).{0,60}(crypto|bitcoin|usdt|forex|investment)",
+        "weight": 0.5
+      },
+      {
+        "id": "job_offer",
+        "pattern": "(remote|part[ -]?time|work from home|recruit).{0,60}(\\$[0-9]+|earn|per (day|hour))",
+        "weight": 0.35
+      },
+      {
+        "id": "wrong_number_opener",
+        "pattern": "^(hi|hello|hey)[ ,!.]*(is this|are you) [a-z]+[ ?.!]*$",
+        "weight": 0.25
+      },
+      {
+        "id": "loan_debt",
+        "pattern": "(loan|debt relief|credit score|cash advance).{0,60}(approved|pre-?approved|eliminate|guaranteed)",
+        "weight": 0.3
+      },
+      {
+        "id": "government_impersonation",
+        "pattern": "(irs|tax refund|social security|ssn|dmv).{0,60}(suspend|refund|verify|warrant|claim|penalt)",
+        "weight": 0.4
+      },
+      {
+        "id": "opt_out_footer",
+        "pattern": "(reply|text) stop to (opt[ -]?out|unsubscribe|end|cancel)",
+        "weight": 0.1
+      }
+    ],
+    "urls": {
+      "shortenerWeight": 0.3,
+      "ipHostWeight": 0.5,
+      "suspiciousTldWeight": 0.35,
+      "shorteners": [
+        "bit.ly", "tinyurl.com", "t.co", "goo.gl", "ow.ly", "is.gd", "cutt.ly",
+        "rb.gy", "shorturl.at", "tiny.cc", "rebrand.ly", "s.id", "t.ly", "short.gy"
+      ],
+      "suspiciousTlds": [
+        "top", "xyz", "icu", "buzz", "click", "live", "shop", "vip", "cyou",
+        "rest", "cfd", "sbs", "loan", "win", "bid", "info", "online", "site"
+      ]
+    }
+  }
+}

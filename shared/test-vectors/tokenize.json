@@ -1,0 +1,97 @@
+[
+ {
+  "text": "",
+  "tokens": []
+ },
+ {
+  "text": "Hey, running 10 min late!",
+  "tokens": [
+   "10",
+   "hey",
+   "late",
+   "min",
+   "running"
+  ]
+ },
+ {
+  "text": "WINNER!! Claim your £1000 prize: call 09061701461 now",
+  "tokens": [
+   "__money__",
+   "__phone__",
+   "call",
+   "claim",
+   "now",
+   "prize",
+   "winner",
+   "your"
+  ]
+ },
+ {
+  "text": "USPS: Your package is on hold. Update address at https://usps-help.top/track?id=7",
+  "tokens": [
+   "__url__",
+   "address",
+   "at",
+   "hold",
+   "id",
+   "is",
+   "on",
+   "package",
+   "track",
+   "update",
+   "usps",
+   "your"
+  ]
+ },
+ {
+  "text": "Pay $6.99 toll at 192.168.1.20/pay or call (800) 555-0199",
+  "tokens": [
+   "__money__",
+   "__phone__",
+   "__url__",
+   "at",
+   "call",
+   "or",
+   "pay",
+   "toll"
+  ]
+ },
+ {
+  "text": "Your code is 482913",
+  "tokens": [
+   "__longnum__",
+   "code",
+   "is",
+   "your"
+  ]
+ },
+ {
+  "text": "Visit bit.ly/abc. Thanks",
+  "tokens": [
+   "__url__",
+   "abc",
+   "thanks",
+   "visit"
+  ]
+ },
+ {
+  "text": "café ÜBER naïve 2024 a b cd",
+  "tokens": [
+   "2024",
+   "ber",
+   "caf",
+   "cd",
+   "na",
+   "ve"
+  ]
+ },
+ {
+  "text": "price 5,000.50 dollars, ref 123456789",
+  "tokens": [
+   "__longnum__",
+   "__money__",
+   "price",
+   "ref"
+  ]
+ }
+]
