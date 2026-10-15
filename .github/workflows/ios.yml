@@ -1,0 +1,53 @@
+name: iOS
+
+on:
+  push:
+    paths:
+      - "ios/**"
+      - "shared/**"
+      - "scripts/**"
+      - ".github/workflows/ios.yml"
+  pull_request:
+    paths:
+      - "ios/**"
+      - "shared/**"
+      - "scripts/**"
+      - ".github/workflows/ios.yml"
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    name: SpamShieldCore tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bundled rules match shared/
+        run: scripts/sync-shared.sh --check
+      - name: Swift version
+        run: swift --version
+      - name: swift test
+        working-directory: ios/SpamShieldCore
+        run: swift test
+
+  app:
+    name: Build app and extensions
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        working-directory: ios
+        run: xcodegen
+      - name: Build for iOS Simulator
+        working-directory: ios
+        run: |
+          xcodebuild \
+            -project SpamShield.xcodeproj \
+            -scheme SpamShield \
+            -destination 'generic/platform=iOS Simulator' \
+            build \
+            CODE_SIGNING_ALLOWED=NO
