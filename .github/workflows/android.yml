@@ -1,0 +1,42 @@
+name: android
+
+on:
+  push:
+    paths: ["android/**", "shared/**", ".github/workflows/android.yml"]
+  pull_request:
+    paths: ["android/**", "shared/**", ".github/workflows/android.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Engine tests (shared vectors) and debug APK
+        run: ./gradlew --no-daemon :core:test :app:assembleDebug
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-test-reports
+          path: android/core/build/reports/tests/
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: spamshield-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

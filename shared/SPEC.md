@@ -20,11 +20,18 @@ the subset that behaves identically in Java, ICU (`NSRegularExpression`) and
 Python `re`: literal characters, `.`, explicit ASCII classes such as `[0-9]`
 and `[a-z]`, alternation, groups, `^`/`$`, `{m,n}`, `?`, `*`, `+` and negative
 lookahead. No `\d`, `\s`, `\w`, `\b`, or inline flags. Patterns are applied to
-text that has already been lowercased, so they are written in lowercase. `.`
-does not match `\n`. "Find" means search anywhere in the string (not a full
+text that has already been lowercased, so they are written in lowercase.
+**Only `\n` is a line terminator**: `.` matches every character except `\n`
+(including `\r`, U+0085, U+2028, U+2029), and `$` matches at the end of the
+string or just before a final `\n` (Python's default). On the JVM compile with
+`Pattern.UNIX_LINES`; with `NSRegularExpression` use `.useUnixLineSeparators`. "Find" means search anywhere in the string (not a full
 match); `^` and `$` anchor to the whole string, not to lines.
 
 Lowercasing is Unicode default lowercasing (`Locale.ROOT` on the JVM).
+
+**Whitespace** (for trimming/removal in sections 1–2) is exactly Python's
+`str.isspace` set: U+0009–U+000D, U+001C–U+001F, U+0020, U+0085, U+00A0,
+U+1680, U+2000–U+200A, U+2028, U+2029, U+202F, U+205F, U+3000.
 
 ## 1. Number normalization — `normalize(raw, countryCode = "1")`
 

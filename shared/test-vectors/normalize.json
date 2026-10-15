@@ -103,5 +103,15 @@
   "raw": "2025550123",
   "countryCode": "44",
   "expected": "2025550123"
+ },
+ {
+  "raw": " +1 202 555 0123　",
+  "countryCode": "1",
+  "expected": "+12025550123"
+ },
+ {
+  "raw": "Bank Alert",
+  "countryCode": "1",
+  "expected": "BANKALERT"
  }
 ]

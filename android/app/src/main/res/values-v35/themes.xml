@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The UI is built from plain framework views; keep classic (non edge-to-edge) insets. -->
+    <style name="Theme.SpamShield" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+</resources>

@@ -651,6 +651,82 @@
   }
  },
  {
+  "name": "sms carriage return inside rule window",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Your account\r\nhas been suspended"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
+  "name": "sms carriage return is not a line break",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Your account\rhas been suspended"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "keyword:account_alert"
+   ],
+   "score": 0.35
+  }
+ },
+ {
+  "name": "sms opener with trailing newline",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Hey is this Jessica?\n"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [
+    "keyword:wrong_number_opener"
+   ],
+   "score": 0.25
+  }
+ },
+ {
+  "name": "sms opener with u2028",
+  "event": {
+   "channel": "sms",
+   "number": "+12025550123",
+   "body": "Hey is this Jessica? Sorry"
+  },
+  "context": {
+   "settings": {
+    "useClassifier": false
+   }
+  },
+  "expect": {
+   "action": "ALLOW",
+   "reasons": [],
+   "score": 0.0
+  }
+ },
+ {
   "name": "sms government",
   "event": {
    "channel": "sms",

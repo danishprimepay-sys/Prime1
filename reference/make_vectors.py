@@ -24,6 +24,7 @@ NORMALIZE = [
     ("011 44 20 7946 0958", "1"), ("0044 20 7946 0958", "1"), ("72345", "1"), ("555-0123", "1"),
     ("Amazon ", "1"), ("john@example.com", "1"), ("Bank Alert", "1"), ("020 7946 0958", "44"),
     ("07700 900123", "44"), ("+", "1"), ("--", "1"), ("12025550123", "1"), ("2025550123", "44"),
+    ("\u00a0+1\u2009202 555 0123\u3000", "1"), ("Bank\u00a0Alert", "1"),
 ]
 
 PATTERNS = [
@@ -96,6 +97,10 @@ ENGINE = [
     ("sms short code blocklisted", sms("Deals!", "72345"), {"blocklist": ["72345"]}, "BLOCK"),
     ("sms community", sms("hello"), {"community": {NUM: 0.9}, "settings": NO_ML}, "BLOCK"),
     ("sms no body", sms(None), {}, "ALLOW"),
+    ("sms carriage return inside rule window", sms("Your account\r\nhas been suspended"), {"settings": NO_ML}, "ALLOW"),
+    ("sms carriage return is not a line break", sms("Your account\rhas been suspended"), {"settings": NO_ML}, "ALLOW"),
+    ("sms opener with trailing newline", sms("Hey is this Jessica?\n"), {"settings": NO_ML}, "ALLOW"),
+    ("sms opener with u2028", sms("Hey is this Jessica?\u2028Sorry"), {"settings": NO_ML}, "ALLOW"),
     ("sms government", sms("IRS: you are eligible for a tax refund of $1,284. Submit your claim today"), {}, "BLOCK"),
     ("sms crypto", sms("Earn guaranteed profit daily with our crypto investment group"), {}, "BLOCK"),
 ]
