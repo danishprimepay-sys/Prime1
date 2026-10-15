@@ -20,7 +20,9 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - uses: android-actions/setup-android@v3
+      # ubuntu-latest ships the Android SDK and exports ANDROID_HOME.
+      - name: Check Android SDK
+        run: test -d "$ANDROID_HOME" && echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - uses: gradle/actions/setup-gradle@v4
 
